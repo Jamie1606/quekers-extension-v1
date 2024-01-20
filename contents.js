@@ -1,6 +1,6 @@
 let text = [];
 
-const inputs = document.querySelectorAll("input[type='text'], textarea");
+var inputs = document.querySelectorAll("input[type='text'], textarea");
 const animationElement = document.createElement("div");
 animationElement.classList.add("animation-element");
 animationElement.id = "animationElement";
@@ -76,3 +76,35 @@ inputs.forEach((input, index) => {
 //     });
 //   }
 // });
+
+// Your existing code...
+
+// Create a new MutationObserver instance
+const observer = new MutationObserver((mutationsList, observer) => {
+  // Look through all mutations that just occured
+  for (let mutation of mutationsList) {
+    // If the addedNodes property has one or more nodes
+    if (mutation.addedNodes.length || mutation.attributeName === 'style') {
+      const newInputs = document.querySelectorAll("input[type='text'], textarea");
+      if (newInputs.length !== inputs.length) {
+        inputs = newInputs;
+        inputs.forEach((input, index) => {
+          if (!text[index]) {
+            input.appendChild(animationElement);
+            input.addEventListener("input", (event) => {
+              if (event.target.value.trim().length > 0) {
+                animationElement.style.opacity = "1";
+              } else {
+                animationElement.style.opacity = "0";
+              }
+              debouncedTranslate(index, event.target.value);
+            });
+          }
+        });
+      }
+    }
+  }
+});
+
+// Start observing the document with the configured parameters
+observer.observe(document.body, { attributes: true, childList: true, subtree: true });
