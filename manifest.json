@@ -3,13 +3,6 @@
   "name": "Quek",
   "description": "Web Extension for Quek",
   "version": "0.1.0",
-  "host_permissions": [
-    "https://*/*",
-    "http://*/*"
-  ],
-  "permissions": [
-    "tabs"
-  ],
   "action": {
     "default_popup": "popup.html",
     "default_title": "Quek"
