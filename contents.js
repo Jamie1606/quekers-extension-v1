@@ -34,7 +34,7 @@ function debounce(func, timeout = 1000) {
 }
 function translate(index, value) {
   text[index] = value;
-  fetch("http://localhost:3000/api/duck/generateWord", {
+  fetch("https://quek-web-v2.vercel.app/api/duck/generateWord", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -46,7 +46,7 @@ function translate(index, value) {
       return response.json();
     })
     .then((result) => {
-      inputs[index].value = result.sentence;
+      if (result !== undefined) inputs[index].value = result.sentence;
     })
     .catch((error) => {
       console.error(error);
