@@ -23,7 +23,7 @@ styleElement.textContent = `
 // Append the style element to the document head
 document.head.appendChild(styleElement);
 
-function debounce(func, timeout = 1000) {
+function debounce(func, timeout = 500) {
   let timer;
   return (...args) => {
     clearTimeout(timer);
@@ -46,12 +46,12 @@ function translate(index, value) {
       return response.json();
     })
     .then((result) => {
+      console.log(result);
       if (result !== undefined) inputs[index].value = result.sentence;
     })
     .catch((error) => {
       console.error(error);
     });
-  // inputs[index].value = "HELLO";
 }
 
 const debouncedTranslate = debounce((index, value) => translate(index, value));
@@ -76,7 +76,6 @@ inputs.forEach((input, index) => {
 //     });
 //   }
 // });
-
 // Your existing code...
 
 // Create a new MutationObserver instance
@@ -84,7 +83,7 @@ const observer = new MutationObserver((mutationsList, observer) => {
   // Look through all mutations that just occured
   for (let mutation of mutationsList) {
     // If the addedNodes property has one or more nodes
-    if (mutation.addedNodes.length || mutation.attributeName === 'style') {
+    if (mutation.addedNodes.length || mutation.attributeName === "style") {
       const newInputs = document.querySelectorAll("input[type='text'], textarea");
       if (newInputs.length !== inputs.length) {
         inputs = newInputs;
